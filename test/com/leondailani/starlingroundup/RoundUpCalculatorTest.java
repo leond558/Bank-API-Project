@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Test for the round-up calculation function.
+ */
 class RoundUpCalculatorTest {
 
     @Test
@@ -24,6 +27,7 @@ class RoundUpCalculatorTest {
         testItem2Amount.setMinorUnits(123);
         testItem2.setAmount(testItem2Amount);
 
+        //Create a mock transaction feed
         List<FeedItem> mockTransactions = Arrays.asList(
                 testItem1,
                 testItem2
@@ -39,6 +43,9 @@ class RoundUpCalculatorTest {
     }
 
     @Test
+    /**
+     * This test measures the edge case whereby there is no round-up.
+     */
     void testCalculateTotalRoundUpZero() {
         // Create mock transactions
         FeedItem testItem1 = new FeedItem();

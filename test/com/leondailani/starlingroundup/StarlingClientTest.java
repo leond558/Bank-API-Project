@@ -15,6 +15,10 @@ import java.time.temporal.ChronoUnit;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests for the StarlingClient class.
+ * These tests mock external HTTP requests to the Starling Bank API.
+ */
 class StarlingClientTest {
 
     private StarlingClient starlingClient;
@@ -25,7 +29,10 @@ class StarlingClientTest {
     @Mock
     private HttpResponse<String> mockResponse;
 
-
+    /**
+     * Setup method to initialize mocks and create a StarlingClient instance with mocked HttpClient.
+     * This method runs before each test.
+     */
     @BeforeEach
     void setUp() throws IOException, InterruptedException {
         MockitoAnnotations.openMocks(this);
@@ -34,6 +41,10 @@ class StarlingClientTest {
         starlingClient = new StarlingClient("fakeAccessToken", mockHttpClient);
     }
 
+    /**
+     * Test for getAccounts method of StarlingClient.
+     * Validates that the response is correctly parsed and the expected values are returned.
+     */
     @Test
     void testGetAccounts() throws IOException, InterruptedException {
         // Prepare mock response
@@ -49,6 +60,10 @@ class StarlingClientTest {
         assertEquals("example", result.getAccounts().get(0).getAccountUid());
     }
 
+    /**
+     * Test for getWeeklyTransactions method of StarlingClient.
+     * Checks if the method correctly handles and parses the response.
+     */
     @Test
     void testGetWeeklyTransactions() throws IOException, InterruptedException {
         // Prepare the mock response
@@ -74,6 +89,10 @@ class StarlingClientTest {
         assertEquals(841, result.getFeedItems().get(0).getAmount().getMinorUnits());
     }
 
+    /**
+     * Test for createSavingsGoal method of StarlingClient.
+     * Ensures that the method correctly interprets a successful response.
+     */
     @Test
     void testCreateSavingsGoal() throws IOException, InterruptedException {
         // Prepare the mock response
@@ -97,6 +116,10 @@ class StarlingClientTest {
         assertEquals("example-savings-goal-uid", result.getSavingsGoalUid());
     }
 
+    /**
+     * Test for addMoneyToSavingsGoal method of StarlingClient.
+     * Validates that the funds transfer is processed correctly.
+     */
     @Test
     void testAddMoneyToSavingsGoal() throws IOException, InterruptedException {
         // Prepare the mock response
@@ -104,6 +127,7 @@ class StarlingClientTest {
         when(mockResponse.statusCode()).thenReturn(200);
 
         // Mock the HttpClient to return the mock response
+
         when(mockHttpClient.send(any(HttpRequest.class), eq(HttpResponse.BodyHandlers.ofString())))
                 .thenReturn(mockResponse);
 
