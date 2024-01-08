@@ -3,6 +3,16 @@ package com.leondailani.starlingroundup;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
+/**
+ * Represents a transaction entity in the Starling Bank API.
+ * These transactions form a transaction feed.
+ * Each FeedItem transaction contains information about the transaction.
+ *
+ * Only need to consider direction of the transaction (we only want outgoing ones
+ * for the goal set up) and the amount (the currency and monetary value of the transaction).
+ * This class is used to deserialize account information
+ * from JSON responses returned by the API.
+ */
 public class FeedItem {
     @JsonProperty("direction")
     private String direction;
@@ -26,6 +36,7 @@ public class FeedItem {
             return minorUnits;
         }
 
+//        A set method is defined here for use in the unit test classes.
         public void setMinorUnits(int minorUnits) {
             this.minorUnits = minorUnits;
         }

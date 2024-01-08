@@ -2,6 +2,12 @@ package com.leondailani.starlingroundup;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * Represents an account entity in the Starling Bank API.
+ * This class is used to deserialize account information
+ * from JSON responses returned by the API.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Account {
     @JsonProperty("accountUid")

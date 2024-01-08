@@ -1,5 +1,12 @@
 package com.leondailani.starlingroundup;
 
+/*
+This class is used to define a Savings Goal that is to be newly created.
+It is constructed by passing a name for the savings goal, the currency that the goal is
+to be defined in and lastly, the target amount for the goal.
+This object is used to provide the requisite information for making the put call to the
+Starling Bank API in order to create the Savings Goal.
+ */
 public class SavingsGoalRequest {
     private String name;
     private String currency;
