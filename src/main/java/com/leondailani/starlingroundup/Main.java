@@ -4,11 +4,14 @@ import com.leondailani.starlingroundup.api.StarlingClient;
 import com.leondailani.starlingroundup.models.*;
 import com.leondailani.starlingroundup.utils.AccessTokenLoader;
 import com.leondailani.starlingroundup.utils.RoundUpCalculator;
+import spark.Response;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.DayOfWeek;
 
+import static com.leondailani.starlingroundup.utils.Hasher.*;
+import static spark.Spark.*;
 /**
  * The main method takes all the transactions over the past week for a Starling Bank customer's
  * first account. It then calculates the round-up. It then creates a savings goal with a name and
@@ -18,27 +21,48 @@ import java.time.DayOfWeek;
  */
 public class Main {
     public static void main(String[] args) {
-        try {
-            //Name for the savings goal
-            String savingsGoalName = "PastWeekSaving";
-            // Amount for the savings goal
-            int savingAmount = 100000;
+        port(8080); // Set the port for the embedded server (optional, default is 4567)
 
-            // Load the access token and initialize the StarlingClient
-            String accessToken = AccessTokenLoader.loadAccessToken();
+        post("/roundup", (request, response) -> {
+            // Parse and validate input parameters
+            String accessToken = request.queryParams("access_token");
+            String savingsGoalName = request.queryParams("savings_goal_name");
+            String savingsGoalAmountString = request.queryParams("savings_goal_amount");
+            int savingsGoalAmount = 0;
+
+            if (accessToken == null || accessToken.isEmpty() ||
+                    savingsGoalName == null || savingsGoalName.isEmpty() ||
+                    savingsGoalAmountString == null || savingsGoalAmountString.isEmpty()) {
+                response.status(400); // Bad request if any parameter is missing
+                return "Access token, savings goal name, and savings goal amount are required.";
+            }
+
+            try {
+                savingsGoalAmount = Integer.parseInt(savingsGoalAmountString);
+            } catch (NumberFormatException e) {
+                response.status(400); // Bad request if amount is not a valid integer
+                return "Savings goal amount must be a valid integer.";
+            }
+
+            // Execute the round-up functionality in a separate method for better code organization
+            return executeRoundUp(accessToken, savingsGoalName, savingsGoalAmount, response);
+        });
+    }
+
+    private static String executeRoundUp(String accessToken, String savingsGoalName, int savingsGoalAmount, Response response) {
+        try {
             StarlingClient client = new StarlingClient(accessToken);
 
             // Retrieve account details
             ClientAccounts accounts = client.getAccounts();
             if (accounts == null || accounts.getAccounts().isEmpty()) {
-                System.err.println("No accounts available or token incorrectly input in config file.");
-                return;
+                throw new IllegalArgumentException("No accounts available.");
             }
 
             // Get the first account's details
-            Account acc = accounts.getAccounts().get(0);
-            String accountUid = acc.getAccountUid();
-            String categoryUid = acc.getDefaultCategory();
+            Account account = accounts.getAccounts().get(0);
+            String accountUid = account.getAccountUid();
+            String categoryUid = account.getDefaultCategory();
 
             // Determine the start and end of the current week
             ZonedDateTime startOfWeek = ZonedDateTime.now().with(DayOfWeek.MONDAY).truncatedTo(ChronoUnit.DAYS);
@@ -47,54 +71,49 @@ public class Main {
             // Fetch transactions for the specified week
             FeedItems transactionDetails = client.getWeeklyTransactions(accountUid, categoryUid, startOfWeek, endOfWeek);
             if (transactionDetails == null || transactionDetails.getFeedItems().isEmpty()) {
-                System.err.println("No transaction data available for the specified week.");
-                return;
+                throw new IllegalArgumentException("No transaction data available for the specified week.");
+            }
+
+            String hash = generateHash(accountUid, startOfWeek, endOfWeek);
+            String hashFilePath = "src/main/resources/hashes.txt"; // The file where hashes are stored
+
+            // Check if this hash already exists
+            if (checkIfHashExists(hash, hashFilePath)) {
+                return "A savings goal for this timeframe already exists.";
             }
 
             // Calculate the round-up amount from the week's transactions
             int roundUpAmount = RoundUpCalculator.calculateTotalRoundUp(transactionDetails.getFeedItems());
-            // If the roundup is zero, the API call will fail so we can't generate a zero savings gaol
             if (roundUpAmount <= 0) {
-                System.out.println("No round-up amount calculated for the current week. Thus no savings goal can be created");
-                return;
+                return "No round-up amount calculated for the current week.";
             }
 
             // Create a savings goal
-            SavingsGoalRequest goalRequest = new SavingsGoalRequest(savingsGoalName, "GBP", savingAmount);
+            SavingsGoalRequest goalRequest = new SavingsGoalRequest(savingsGoalName, "GBP", savingsGoalAmount);
             SavingsGoal savingsGoalResponse = client.createSavingsGoal(accountUid, goalRequest);
-            if (savingsGoalResponse == null) {
-                System.err.println("Failed to receive a valid response for savings goal creation.");
-                return;
+            if (savingsGoalResponse == null || !savingsGoalResponse.getSuccess()) {
+                throw new Exception("Failed to create the savings goal.");
             }
 
             // Transfer the round-up amount to the savings goal
-            // Check that the account has sufficient money to first transfer funds.
-            Balance balance = client.accountBalanceChecker(accountUid);
-            if (balance.getAmount().getMinorUnits()< roundUpAmount){
-                System.err.println("Account has insufficient funds to transfer round up amount to the savings goal");
-                return;
-            }
-
-            //Transfer the funds.
-            String savinggoalUId = savingsGoalResponse.getSavingsGoalUid();
-            SavingsGoalTransfer transferResponse = client.addMoneyToSavingsGoal(accountUid, savinggoalUId, roundUpAmount);
+            String savingsGoalUid = savingsGoalResponse.getSavingsGoalUid();
+            SavingsGoalTransfer transferResponse = client.addMoneyToSavingsGoal(accountUid, savingsGoalUid, roundUpAmount);
             if (transferResponse == null || !transferResponse.getSuccess()) {
-                System.err.println("Failed to transfer funds to the savings goal.");
-                return;
+                throw new Exception("Failed to transfer funds to the savings goal.");
             }
 
-            // Output confirmation message
-            String outputConfirm = String.format("Savings Goal with UID (%s) of %s pence successfully created for account with UID (%s), with %s pence deposited into the goal from the past week to date's transactions.",
-                    savingsGoalResponse.getSavingsGoalUid(),
-                    goalRequest.getTarget().getMinorUnits(),
-                    acc.getAccountUid(),
-                    roundUpAmount);
+            storeHash(hash,hashFilePath);
 
-            System.out.println(outputConfirm);
+            // Confirmation message
+            return String.format("Savings Goal with UID (%s) of %s pence successfully created for account with UID (%s), and %s pence deposited into the goal from the past week's transactions.",
+                    savingsGoalUid, savingsGoalAmount, accountUid, roundUpAmount);
 
+        } catch (IllegalArgumentException e) {
+            response.status(400); // Bad request for illegal argument
+            return e.getMessage();
         } catch (Exception e) {
-            System.err.println("An unexpected error occurred: " + e.getMessage());
-            e.printStackTrace();
+            response.status(500); // Internal server error for unhandled exceptions
+            return "An error occurred: " + e.getMessage();
         }
     }
 }
