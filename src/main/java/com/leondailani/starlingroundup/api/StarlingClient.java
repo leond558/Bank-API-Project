@@ -1,4 +1,4 @@
-package com.leondailani.starlingroundup;
+package com.leondailani.starlingroundup.api;
 
 import java.net.http.HttpClient;
 import java.net.URI;
@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leondailani.starlingroundup.SavingGoalFailException;
 import com.leondailani.starlingroundup.models.*;
 
 import java.time.ZonedDateTime;

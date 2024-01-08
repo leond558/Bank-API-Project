@@ -1,5 +1,6 @@
 package com.leondailani.starlingroundup;
 
+import com.leondailani.starlingroundup.api.StarlingClient;
 import com.leondailani.starlingroundup.models.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

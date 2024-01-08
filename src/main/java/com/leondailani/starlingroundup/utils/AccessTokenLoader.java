@@ -1,6 +1,6 @@
 package com.leondailani.starlingroundup.utils;
 
-import com.leondailani.starlingroundup.StarlingClient;
+import com.leondailani.starlingroundup.api.StarlingClient;
 
 import java.io.IOException;
 import java.io.InputStream;

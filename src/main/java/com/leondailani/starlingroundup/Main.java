@@ -1,5 +1,6 @@
 package com.leondailani.starlingroundup;
 
+import com.leondailani.starlingroundup.api.StarlingClient;
 import com.leondailani.starlingroundup.models.*;
 import com.leondailani.starlingroundup.utils.AccessTokenLoader;
 import com.leondailani.starlingroundup.utils.RoundUpCalculator;
