@@ -22,8 +22,8 @@ public class Hasher {
             byte[] encodedhash = digest.digest(dataToHash.getBytes(StandardCharsets.UTF_8));
 
             StringBuilder hexString = new StringBuilder(2 * encodedhash.length);
-            for (int i = 0; i < encodedhash.length; i++) {
-                String hex = Integer.toHexString(0xff & encodedhash[i]);
+            for (byte b : encodedhash) {
+                String hex = Integer.toHexString(0xff & b);
                 if (hex.length() == 1) {
                     hexString.append('0');
                 }

@@ -2,7 +2,6 @@ package com.leondailani.starlingroundup;
 
 import com.leondailani.starlingroundup.api.StarlingClient;
 import com.leondailani.starlingroundup.models.*;
-import com.leondailani.starlingroundup.utils.AccessTokenLoader;
 import com.leondailani.starlingroundup.utils.RoundUpCalculator;
 import spark.Response;
 
@@ -28,7 +27,7 @@ public class Main {
             String accessToken = request.queryParams("access_token");
             String savingsGoalName = request.queryParams("savings_goal_name");
             String savingsGoalAmountString = request.queryParams("savings_goal_amount");
-            int savingsGoalAmount = 0;
+            int savingsGoalAmount;
 
             if (accessToken == null || accessToken.isEmpty() ||
                     savingsGoalName == null || savingsGoalName.isEmpty() ||
@@ -60,7 +59,7 @@ public class Main {
             }
 
             // Get the first account's details
-            Account account = accounts.getAccounts().get(0);
+            Account account = accounts.getAccounts().getFirst();
             String accountUid = account.getAccountUid();
             String categoryUid = account.getDefaultCategory();
 
