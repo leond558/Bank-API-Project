@@ -1,4 +1,6 @@
-package com.leondailani.starlingroundup;
+package com.leondailani.starlingroundup.utils;
+import com.leondailani.starlingroundup.models.FeedItem;
+
 import java.util.List;
 
 /**

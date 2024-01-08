@@ -1,5 +1,6 @@
-package com.leondailani.starlingroundup;
+package com.leondailani.starlingroundup.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.leondailani.starlingroundup.models.FeedItem;
 
 import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)

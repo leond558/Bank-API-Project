@@ -1,4 +1,4 @@
-package com.leondailani.starlingroundup;
+package com.leondailani.starlingroundup.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

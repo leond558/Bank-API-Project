@@ -1,4 +1,6 @@
-package com.leondailani.starlingroundup;
+package com.leondailani.starlingroundup.models;
+import com.leondailani.starlingroundup.models.Account;
+
 import java.util.List;
 
 /**

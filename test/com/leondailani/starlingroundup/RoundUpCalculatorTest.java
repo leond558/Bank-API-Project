@@ -1,7 +1,7 @@
 package com.leondailani.starlingroundup;
 
-import com.leondailani.starlingroundup.FeedItem;
-import com.leondailani.starlingroundup.RoundUpCalculator;
+import com.leondailani.starlingroundup.models.FeedItem;
+import com.leondailani.starlingroundup.utils.RoundUpCalculator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
