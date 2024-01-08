@@ -48,6 +48,8 @@ to select which account to create the savings goal would be good).
 the round-up is more representative of how such a feature would be implemented in real
 life.
 
+- Account for the potential use of foreign currencies in the transaction.
+
 
 ## Installation and setup
 
