@@ -52,7 +52,32 @@ life.
 ### Setup
 Explain how to get a local copy up and running.
 
-1. Clone the repository:
-    git clone https://your-repository-url.git
+1. Clone the repository: git clone https://github.com/leond558/LeonDailaniStarlingRoundUp.git
+2. Navigate to the project directory: cd LeonDailaniStarlingRoundUp
+3. Build the project with Maven: mvn clean install
+
+### Configuration
+
+In order for the program to work, an access token for a Starling Bank customer is required.
+
+To set up your access token securely, follow these steps:
+
+Create a config.properties file in the src/main/resources directory.
+Add your Starling Bank API access token to the file as follows: 
+    starling.access.token=INSERT_YOUR_ACCESS_TOKEN_HERE
+
+### Running the Program
+
+Execute the main application using Maven:
+
+mvn exec:java -Dexec.mainClass="com.leondailani.starlingroundup.Main"
+
+### Testing
+
+Run the unit tests using Maven:
+
+mvn test
+
+
 
 
