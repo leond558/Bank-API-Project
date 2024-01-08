@@ -1,9 +1,6 @@
 package com.leondailani.starlingroundup;
 
-import com.leondailani.starlingroundup.models.ClientAccounts;
-import com.leondailani.starlingroundup.models.FeedItems;
-import com.leondailani.starlingroundup.models.SavingsGoal;
-import com.leondailani.starlingroundup.models.SavingsGoalTransfer;
+import com.leondailani.starlingroundup.models.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

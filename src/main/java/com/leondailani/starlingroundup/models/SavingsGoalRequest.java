@@ -1,4 +1,4 @@
-package com.leondailani.starlingroundup;
+package com.leondailani.starlingroundup.models;
 
 /*
 This class is used to define a Savings Goal that is to be newly created.
