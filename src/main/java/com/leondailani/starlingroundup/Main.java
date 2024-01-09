@@ -2,16 +2,15 @@ package com.leondailani.starlingroundup;
 
 import static com.leondailani.starlingroundup.utils.RoundUpExecutor.executeRoundUp;
 import static spark.Spark.*;
+
 /**
- * The main method takes all the transactions over the past week for a Starling Bank customer's
- * first account. It then calculates the round-up. It then creates a savings goal with a name and
- * target amount that can be adjusted accordingly. It then transfers funds from the round-up into
- * the savings goal accounting for whether these funds exist in the account or not (whether there
- * is enough money in the account to make the transfer).
+ * Main method which sets up the embedded web server from which the calls to create
+ * the savings goal can be made. Using Spark for the server.
  */
 public class Main {
     public static void main(String[] args) {
-        port(8080); // Set the port for the embedded server (optional, default is 4567)
+        // Setting the port for the embedded server
+        port(8080);
 
         post("/roundup", (request, response) -> {
             // Parse and validate input parameters
@@ -21,6 +20,8 @@ public class Main {
             String accountIndexString = request.queryParams("account_index");
             int savingsGoalAmount;
             int accountIndex;
+
+//            Checking that all the input parameters are there and in the correct format.
 
             if (accessToken == null || accessToken.isEmpty() ||
                     savingsGoalName == null || savingsGoalName.isEmpty() ||

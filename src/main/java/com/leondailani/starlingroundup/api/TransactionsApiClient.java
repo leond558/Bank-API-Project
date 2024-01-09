@@ -33,8 +33,8 @@ public class TransactionsApiClient extends BaseApiClient {
     public FeedItems getWeeklyTransactions(String accountUid, String categoryUid, ZonedDateTime startOfWeek, ZonedDateTime endOfWeek) throws IOException, InterruptedException {
 
         String url = String.format(path,accountUid,categoryUid,
-                startOfWeek.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
-                endOfWeek.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+                endOfWeek.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+                startOfWeek.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
 
 
         HttpRequest request = makeRequestURIGET(url);

@@ -16,11 +16,32 @@ import java.time.temporal.ChronoUnit;
 import static com.leondailani.starlingroundup.utils.AccountSelector.selectAccount;
 import static com.leondailani.starlingroundup.utils.Hasher.*;
 
+/**
+ * This class runs the main round up functionality.
+ * The executeRoundUp method takes all the transactions over the past week for a Starling Bank customer's
+ * account. It then calculates the round-up. It then creates a savings goal with a name and
+ * target amount that can be adjusted accordingly. It then transfers funds from the round-up into
+ * the savings goal accounting for whether these funds exist in the account or not (whether there
+ * is enough money in the account to make the transfer).
+ *
+ * A confirmation is thus returned to indicate the success of the saving goal creation.
+ *
+ * The creation of this savings goal is then documented with a hash to prevent the same savings goal being created.
+ */
 public class RoundUpExecutor {
 
     // The file where hashes are stored
     private static final String hashFilePath = "src/main/resources/hashes.txt";
 
+    /**
+     * The method for calculating the round up and creating the corresponding savings goal.
+     * @param accessToken Access token pertaining to the Starling Bank customer
+     * @param savingsGoalName Name of the savings goal to be created.
+     * @param savingsGoalAmount The amount for the savings goal.
+     * @param accountIndex Which account for the customer should be used.
+     * @param response
+     * @return A confirmation message String, confirming the successful creation of the Savings Goal.
+     */
     public static String executeRoundUp(String accessToken, String savingsGoalName, int savingsGoalAmount, int accountIndex, Response response) {
         try {
             AccountsApiClient accountsClient = new AccountsApiClient(accessToken);
@@ -36,9 +57,11 @@ public class RoundUpExecutor {
             String accountUid = account.getAccountUid();
             String categoryUid = account.getDefaultCategory();
 
-            // Determine the start and end of the current week
-            ZonedDateTime startOfWeek = ZonedDateTime.now().with(DayOfWeek.MONDAY).truncatedTo(ChronoUnit.DAYS);
-            ZonedDateTime endOfWeek = startOfWeek.plusDays(7);
+// Set the start of the week to today, truncated to the start of the day.
+            ZonedDateTime startOfWeek = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS);
+
+// Set the end of the week to 7 days before the start of the week.
+            ZonedDateTime endOfWeek = startOfWeek.minusDays(7);
 
             // Fetch transactions for the specified week
             TransactionsApiClient transactionsClient = new TransactionsApiClient(accessToken);
