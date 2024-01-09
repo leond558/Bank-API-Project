@@ -5,6 +5,7 @@ import com.leondailani.starlingroundup.models.SavingsGoal;
 import com.leondailani.starlingroundup.models.SavingsGoalRequest;
 
 import java.io.IOException;
+import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 
 import static com.leondailani.starlingroundup.utils.JsonUtil.goalRequestToString;
@@ -17,6 +18,7 @@ public class SGCreateApiClient extends BaseApiClient{
     public SGCreateApiClient(String accessToken){
         super(accessToken);
     }
+    public SGCreateApiClient(String accessToken, HttpClient httpClient){ super(accessToken,httpClient);}
 
     /**
      * Creates a saving goal for a particular account.

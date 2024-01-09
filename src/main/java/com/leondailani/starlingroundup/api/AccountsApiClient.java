@@ -3,6 +3,7 @@ package com.leondailani.starlingroundup.api;
 import com.leondailani.starlingroundup.models.ClientAccounts;
 
 import java.io.IOException;
+import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 
 /**
@@ -15,6 +16,8 @@ public class AccountsApiClient  extends  BaseApiClient{
     public AccountsApiClient(String accessToken){
         super(accessToken);
     }
+
+    public AccountsApiClient(String accessToken, HttpClient httpClient){ super(accessToken,httpClient);}
 
     /**
      * Returns the account information from a corresponding API call to Starling Bank.

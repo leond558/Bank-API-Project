@@ -4,6 +4,7 @@ import com.leondailani.starlingroundup.exceptions.SavingGoalFailException;
 import com.leondailani.starlingroundup.models.SavingsGoalTransfer;
 
 import java.io.IOException;
+import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,8 @@ public class SGTransferApiClient extends BaseApiClient{
     public SGTransferApiClient(String accessToken){
         super(accessToken);
     }
+    public SGTransferApiClient(String accessToken, HttpClient httpClient){ super(accessToken,httpClient);}
+
 
     /**
      * Transfers funds into a Savings Goal.

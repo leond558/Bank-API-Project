@@ -3,6 +3,7 @@ package com.leondailani.starlingroundup.api;
 import com.leondailani.starlingroundup.models.Balance;
 
 import java.io.IOException;
+import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 
 /**
@@ -13,6 +14,8 @@ public class BalanceApiClient extends BaseApiClient{
     public BalanceApiClient(String accessToken){
         super(accessToken);
     }
+    public BalanceApiClient(String accessToken, HttpClient httpClient){ super(accessToken,httpClient);}
+
 
     /**
      * Method to check the balance of the account considered.

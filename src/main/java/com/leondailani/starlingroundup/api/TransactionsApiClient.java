@@ -3,6 +3,7 @@ package com.leondailani.starlingroundup.api;
 import com.leondailani.starlingroundup.models.FeedItems;
 
 import java.io.IOException;
+import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +19,7 @@ public class TransactionsApiClient extends BaseApiClient {
     public TransactionsApiClient(String accessToken){
         super(accessToken);
     }
+    public TransactionsApiClient(String accessToken, HttpClient httpClient){ super(accessToken,httpClient);}
 
     /**
      * Method to make an API call to fetch the transaction feed over the last week.
