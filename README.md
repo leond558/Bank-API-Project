@@ -22,7 +22,7 @@ The program assumes uses of GBP exclusively as the currency.
 The program works by the following steps:
 1. The embedded server is set up and the input parameters for a call to the server are parsed and validated.
 2. The main round up functionality is then called. First all customer accounts are retrieved and the desired account is then isolated. The desired account is specified by an index when the server call is made. Index 0 would be the first account registered to a customer and this is also the option that the program will default to if the index provided does not have an account associated with it.
-3. The transaction feed from the past week is retrieved. The past week is defined from the day the server call is made to 7 days back.
+3. The transaction feed from the week is retrieved. The past week is defined from the day the server call is made.
 4. A hash is generated which combines the account and the time interval. If this hash already exists in hashes.txt, it indicates that a round-up savings goal for this account has already been made for this time frame and an exception is thrown. SHA-256 is used.
 5. A savings goal is created.
 5. The round-up is calculated and checked against the funds in the account.
@@ -122,6 +122,8 @@ Where:
 - YOUR_SAVINGS_GOAL_NAME = the name you want to give to the savings goal
 - YOUR_SAVINGS_GOAL_AMOUNT = the amount that you want the savings goal to be
 - YOUR_ACCOUNT_INDEX = the index of the account for the customer you want to attach the savings goal to (0 is the first account)
+
+For both of these check that the quote marks are straight and not curly!!! ""
 
 A success message will then output detailing the creation of the savings goal and the amount from the round-up that has been deposited in it!
 

@@ -9,7 +9,6 @@ import com.leondailani.starlingroundup.exceptions.SavingGoalAlreadyProcessedExce
 import com.leondailani.starlingroundup.models.*;
 import spark.Response;
 
-import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -23,9 +22,7 @@ import static com.leondailani.starlingroundup.utils.Hasher.*;
  * target amount that can be adjusted accordingly. It then transfers funds from the round-up into
  * the savings goal accounting for whether these funds exist in the account or not (whether there
  * is enough money in the account to make the transfer).
- *
  * A confirmation is thus returned to indicate the success of the saving goal creation.
- *
  * The creation of this savings goal is then documented with a hash to prevent the same savings goal being created.
  */
 public class RoundUpExecutor {
@@ -59,8 +56,6 @@ public class RoundUpExecutor {
 
 // Set the start of the week to today, truncated to the start of the day.
             ZonedDateTime startOfWeek = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS);
-
-// Set the end of the week to 7 days before the start of the week.
             ZonedDateTime endOfWeek = startOfWeek.plusDays(7);
 
             // Fetch transactions for the specified week
