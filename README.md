@@ -60,6 +60,7 @@ users without having to manually swap the access token in and out).
 to select which account to create the savings goal would be good).
 - Account for the potential use of foreign currencies in the transaction.
 - Create a GUI for interaction with the server.
+- The web server is quite rudimentary, so it would be good to flesh that out a bit more.
 
 
 ## Installation and setup
@@ -124,6 +125,8 @@ Where:
 - YOUR_ACCOUNT_INDEX = the index of the account for the customer you want to attach the savings goal to (0 is the first account)
 
 For both of these check that the quote marks are straight and not curly!!! ""
+
+Make sure the sandbox customer has transactions simulated.
 
 A success message will then output detailing the creation of the savings goal and the amount from the round-up that has been deposited in it!
 
