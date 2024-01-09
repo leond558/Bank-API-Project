@@ -1,6 +1,9 @@
 package com.leondailani.starlingroundup.utils;
 
-import com.leondailani.starlingroundup.api.*;
+import com.leondailani.starlingroundup.api.AccountsApiClient;
+import com.leondailani.starlingroundup.api.SGCreateApiClient;
+import com.leondailani.starlingroundup.api.SGTransferApiClient;
+import com.leondailani.starlingroundup.api.TransactionsApiClient;
 import com.leondailani.starlingroundup.exceptions.NoRoundUpException;
 import com.leondailani.starlingroundup.exceptions.SavingGoalAlreadyProcessedException;
 import com.leondailani.starlingroundup.models.*;
@@ -12,7 +15,6 @@ import java.time.temporal.ChronoUnit;
 
 import static com.leondailani.starlingroundup.utils.AccountSelector.selectAccount;
 import static com.leondailani.starlingroundup.utils.Hasher.*;
-import static com.leondailani.starlingroundup.utils.SufficientFundChecker.calculateFunds;
 
 public class RoundUpExecutor {
 
@@ -65,7 +67,8 @@ public class RoundUpExecutor {
             SavingsGoal savingsGoalResponse = creationClient.createSavingsGoal(accountUid, goalRequest);
 
 //            Check whether the account has sufficient funds to transfer into the goal and check how much it can transfer in
-            int transferAmount = calculateFunds(accessToken,accountUid,roundUpAmount);
+            SufficientFundChecker fundCheck = new SufficientFundChecker(accessToken, accountUid);
+            int transferAmount = fundCheck.calculateFunds(roundUpAmount);
 
 
             // Transfer the round-up amount to the savings goal

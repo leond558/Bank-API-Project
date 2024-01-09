@@ -23,9 +23,16 @@ public class Balance {
             return minorUnits;
         }
 
+        public void setMinorUnits(int minorUnits) {
+            this.minorUnits = minorUnits;
+        }
     }
 
     public Amount getAmount() {
         return amount;
+    }
+
+    public void setAmount(Amount amount) {
+        this.amount = amount;
     }
 }

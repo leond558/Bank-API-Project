@@ -8,11 +8,13 @@ import java.io.IOException;
 
 public class SufficientFundChecker {
 
-    public static int calculateFunds(String accessToken, String accountUid, int roundUpAmount) throws IOException, InterruptedException, BalanceZeroException {
+    private BalanceApiClient balanceClient;
+    private Balance accountBalance;
+
+    public int calculateFunds(int roundUpAmount) throws BalanceZeroException {
 
 //        Retrieve the account balance
-        BalanceApiClient balanceClient = new BalanceApiClient(accessToken);
-        Balance accountBalance = balanceClient.getBalance(accountUid);
+
         int balanceAmount = accountBalance.getAmount().getMinorUnits();
 
 //        Check the account balance against the roundUp amount
@@ -27,5 +29,16 @@ public class SufficientFundChecker {
         //If there are sufficient funds for the saving goal to be created with the round up
 //then use that
         return roundUpAmount;
+    }
+
+    public SufficientFundChecker(String accessToken, String accountUid) throws IOException, InterruptedException {
+        this.balanceClient = new BalanceApiClient(accessToken);
+        this.accountBalance = this.balanceClient.getBalance(accountUid);
+    }
+
+//    Overloaded constructor for testing the logic
+    public SufficientFundChecker(Balance balance) {
+        this.balanceClient = null;
+        this.accountBalance = balance;
     }
 }
