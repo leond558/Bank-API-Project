@@ -72,22 +72,26 @@ to select which account to create the savings goal would be good).
 ### Setup
 Explain how to get a local copy up and running.
 
-1. Clone the repository: git clone https://github.com/leond558/LeonDailaniStarlingRoundUp.git
-2. Navigate to the project directory: cd LeonDailaniStarlingRoundUp
-3. Build the project with Maven: mvn clean install
+1. Clone the repository: ```git clone https://github.com/leond558/LeonDailaniStarlingRoundUp.git```
+2. Navigate to the project directory: ```cd LeonDailaniStarlingRoundUp```
+3. Build the project with Maven: ```mvn clean install```
 
 
 ### Running the Program
 
 Execute the main application using Maven:
 
+```
 mvn exec:java -Dexec.mainClass="com.leondailani.starlingroundup.Main"
+```
 
 ### Testing
 
 Run the unit tests using Maven:
 
+```
 mvn test
+```
 
 ### Running the round-up
 
@@ -97,20 +101,22 @@ accessing the server through an API call or a curl command.
 
 For instance, the server can be access using the following command in a UNIX terminal:
 
+```
 curl -X POST "http://localhost:8080/roundup" \
 -d "access_token=YOUR_ACCESS_TOKEN" \
 -d "savings_goal_name=YOUR_SAVINGS_GOAL_NAME" \
 -d "savings_goal_amount=YOUR_SAVINGS_GOAL_AMOUNT" \
 -d "account_index=YOUR_ACCOUNT_INDEX"
-
+```
 Or equivalently for use in a Microsoft command prompt terminal:
 
+```
 curl -X POST "http://localhost:8080/roundup" ^
 -d "access_token=YOUR_ACCESS_TOKEN" ^
 -d "savings_goal_name=YOUR_SAVINGS_GOAL_NAME" ^
 -d "savings_goal_amount=YOUR_SAVINGS_GOAL_AMOUNT" ^
 -d "account_index=YOUR_ACCOUNT_INDEX"
-
+```
 Where:
 - YOUR_ACCESS_TOKEN = the access_token for the customer you are interested in
 - YOUR_SAVINGS_GOAL_NAME = the name you want to give to the savings goal
