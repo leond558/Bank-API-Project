@@ -61,7 +61,7 @@ public class RoundUpExecutor {
             ZonedDateTime startOfWeek = ZonedDateTime.now().truncatedTo(ChronoUnit.DAYS);
 
 // Set the end of the week to 7 days before the start of the week.
-            ZonedDateTime endOfWeek = startOfWeek.minusDays(7);
+            ZonedDateTime endOfWeek = startOfWeek.plusDays(7);
 
             // Fetch transactions for the specified week
             TransactionsApiClient transactionsClient = new TransactionsApiClient(accessToken);
