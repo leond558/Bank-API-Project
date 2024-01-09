@@ -21,7 +21,7 @@ public abstract class BaseApiClient {
     public BaseApiClient(String accessToken, HttpClient httpClient) {
         //        Access token pertaining to the Starling client.
         this.accessToken = accessToken;
-        //        Initialising a HTTP Client instance when a 'StarlingClient' object is constructed
+        //        Initialising a HTTP Client instance when an ApiClient object is constructed
         //                Using HTTP_2 for efficient performance
         this.httpClient = httpClient != null ? httpClient : HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
     }
