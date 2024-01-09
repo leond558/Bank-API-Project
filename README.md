@@ -65,15 +65,6 @@ Explain how to get a local copy up and running.
 2. Navigate to the project directory: cd LeonDailaniStarlingRoundUp
 3. Build the project with Maven: mvn clean install
 
-### Configuration
-
-In order for the program to work, an access token for a Starling Bank customer is required.
-
-To set up your access token securely, follow these steps:
-
-Create a config.properties file in the src/main/resources directory.
-Add your Starling Bank API access token to the file as follows: 
-    starling.access.token=INSERT_YOUR_ACCESS_TOKEN_HERE
 
 ### Running the Program
 
@@ -86,6 +77,22 @@ mvn exec:java -Dexec.mainClass="com.leondailani.starlingroundup.Main"
 Run the unit tests using Maven:
 
 mvn test
+
+### Running the round-up
+
+With the program now running and the embedded web server now up,
+creating a savings goal from the round up is now possible through
+accessing the server through an API call or a curl command.
+
+For instance, the server can be access using the following command:
+
+curl -X POST "http://localhost:8080/roundup" \
+-d "access_token=YOUR_ACCESS_TOKEN" \
+-d "savings_goal_name=YOUR_SAVINGS_GOAL_NAME" \
+-d "savings_goal_amount=YOUR_SAVINGS_GOAL_AMOUNT" \
+-d "account_index=YOUR_ACCOUNT_INDEX"
+
+
 
 
 

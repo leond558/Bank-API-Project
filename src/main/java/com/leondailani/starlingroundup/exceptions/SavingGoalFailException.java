@@ -1,4 +1,4 @@
-package com.leondailani.starlingroundup;
+package com.leondailani.starlingroundup.exceptions;
 
 /**
  * Defines an exception to handle instances when creation or transfer of funds into
