@@ -3,8 +3,17 @@ package com.leondailani.starlingroundup.utils;
 import com.leondailani.starlingroundup.models.Account;
 import com.leondailani.starlingroundup.models.ClientAccounts;
 
+/**
+ * A utility class to handle account selection
+ */
 public class AccountSelector {
 
+    /**
+     * Method to select the account from a list of client accounts.
+     * @param accounts The list of client accounts.
+     * @param desiredAccount The index of the account requested.
+     * @return The account with the index or if index is out of bounds, the first account.
+     */
     public static Account selectAccount(ClientAccounts accounts, int desiredAccount){
         try{
 //            if the account desired exists, then retrieve that one.

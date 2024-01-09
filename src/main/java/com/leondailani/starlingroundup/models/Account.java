@@ -25,4 +25,7 @@ public class Account {
         return defaultCategory;
     }
 
+    public void setAccountUid(String accountUid) {
+        this.accountUid = accountUid;
+    }
 }
