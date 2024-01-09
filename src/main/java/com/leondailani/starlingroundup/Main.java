@@ -39,7 +39,7 @@ public class Main {
             }
 
             try {
-                accountIndex = Integer.parseInt(savingsGoalAmountString);
+                accountIndex = Integer.parseInt(accountIndexString);
             } catch (NumberFormatException e) {
                 response.status(400); // Bad request if amount is not a valid integer
                 return "Account index number must be a valid integer.";

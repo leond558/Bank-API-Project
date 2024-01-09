@@ -16,6 +16,7 @@ public class AccountSelector {
      */
     public static Account selectAccount(ClientAccounts accounts, int desiredAccount){
         try{
+            System.out.println(desiredAccount);
 //            if the account desired exists, then retrieve that one.
             return accounts.getAccounts().get(desiredAccount);
         }
