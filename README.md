@@ -1,10 +1,5 @@
 # Bank API Project Technical Challenge Leon Dailani
 
-This was really fun technical challenge and I learnt a lot from it! I want to thank Starling Bank for
-considering my application and taking the time to go through my work.
-
-I usually code in Python these days, so I found using Java to be a great revision opportunity!
-
 ## Description
 This project is a Java-based application that interacts with the Starling Bank API to provide a 'round-up' feature for transactions.
 It rounds up the transactions to the nearest pound and transfers the difference into a savings goal.
