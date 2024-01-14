@@ -1,4 +1,4 @@
-# Starling Bank Technical Challenge Leon Dailani
+# Bank API Project Technical Challenge Leon Dailani
 
 This was really fun technical challenge and I learnt a lot from it! I want to thank Starling Bank for
 considering my application and taking the time to go through my work.
